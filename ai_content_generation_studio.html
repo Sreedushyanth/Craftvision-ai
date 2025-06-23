@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Content Generation Studio - VisionCraft AI</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvisioncraf2366back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.5"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header Navigation -->
+    <header class="bg-surface border-b border-border sticky top-0 z-50 shadow-sm">
+        <div class="max-w-full px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-semibold text-text-primary">VisionCraft AI</h1>
+                </div>
+
+                <!-- Main Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="ai_content_generation_studio.html" class="text-primary font-medium border-b-2 border-primary pb-1">Generation Studio</a>
+                    <a href="image_editor_workspace.html" class="text-text-secondary hover:text-primary transition-colors">Image Editor</a>
+                    <a href="content_gallery_management.html" class="text-text-secondary hover:text-primary transition-colors">Gallery</a>
+                    <a href="ai_model_settings_configuration.html" class="text-text-secondary hover:text-primary transition-colors">AI Settings</a>
+                    <a href="user_dashboard_quick_actions.html" class="text-text-secondary hover:text-primary transition-colors">Dashboard</a>
+                </nav>
+
+                <!-- User Account -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-text-secondary hover:text-primary transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-12"/>
+                        </svg>
+                    </button>
+                    <div class="w-8 h-8 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">JD</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-text-secondary hover:text-primary">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar - AI Controls -->
+        <aside class="w-80 bg-surface border-r border-border flex-shrink-0 overflow-y-auto">
+            <div class="p-6 space-y-6">
+                <!-- AI Model Selection -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">AI Model</label>
+                    <select class="input-field">
+                        <option>DALL-E 3 (Recommended)</option>
+                        <option>Midjourney v6</option>
+                        <option>Stable Diffusion XL</option>
+                        <option>Adobe Firefly</option>
+                    </select>
+                </div>
+
+                <!-- Prompt Input -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="block text-sm font-medium text-text-primary">Prompt</label>
+                        <button class="text-xs text-primary hover:text-primary-600 font-medium">Optimize</button>
+                    </div>
+                    <textarea class="input-field h-32 resize-none" placeholder="Describe the image you want to create... Be specific about style, colors, composition, and mood." id="promptInput"></textarea>
+                    <div class="flex items-center space-x-2 text-xs text-text-secondary">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span>AI suggestions enabled</span>
+                    </div>
+                </div>
+
+                <!-- Style Transfer Presets -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">Style Presets</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="p-3 border border-border rounded-lg hover:border-primary transition-colors text-left">
+                            <div class="w-full h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded mb-2"></div>
+                            <span class="text-xs font-medium">Photorealistic</span>
+                        </button>
+                        <button class="p-3 border border-border rounded-lg hover:border-primary transition-colors text-left">
+                            <div class="w-full h-16 bg-gradient-to-br from-orange-400 to-pink-600 rounded mb-2"></div>
+                            <span class="text-xs font-medium">Digital Art</span>
+                        </button>
+                        <button class="p-3 border border-border rounded-lg hover:border-primary transition-colors text-left">
+                            <div class="w-full h-16 bg-gradient-to-br from-green-400 to-blue-600 rounded mb-2"></div>
+                            <span class="text-xs font-medium">Oil Painting</span>
+                        </button>
+                        <button class="p-3 border border-border rounded-lg hover:border-primary transition-colors text-left">
+                            <div class="w-full h-16 bg-gradient-to-br from-purple-400 to-red-600 rounded mb-2"></div>
+                            <span class="text-xs font-medium">Anime</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Generation Parameters -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-medium text-text-primary">Generation Settings</h3>
+                    
+                    <!-- Resolution -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-medium text-text-secondary">Resolution</label>
+                        <select class="input-field text-sm">
+                            <option>1024x1024 (Square)</option>
+                            <option>1024x768 (Landscape)</option>
+                            <option>768x1024 (Portrait)</option>
+                            <option>1920x1080 (HD)</option>
+                        </select>
+                    </div>
+
+                    <!-- Quality -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-medium text-text-secondary">Quality</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="range" class="flex-1" min="1" max="10" value="7" />
+                            <span class="text-sm font-medium text-text-primary w-8">7</span>
+                        </div>
+                    </div>
+
+                    <!-- Creativity -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-medium text-text-secondary">Creativity</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="range" class="flex-1" min="1" max="10" value="5" />
+                            <span class="text-sm font-medium text-text-primary w-8">5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button class="btn-primary w-full py-3 text-base font-semibold" id="generateBtn">
+                    <svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    Generate Image
+                </button>
+
+                <!-- Progress Indicator -->
+                <div class="progress-indicator hidden" id="progressBar">
+                    <div class="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Canvas Area -->
+        <main class="flex-1 flex flex-col bg-gray-50">
+            <!-- Canvas Toolbar -->
+            <div class="bg-surface border-b border-border px-6 py-3 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <!-- Undo/Redo -->
+                    <div class="flex items-center space-x-1">
+                        <button class="p-2 text-text-secondary hover:text-primary transition-colors" title="Undo (Ctrl+Z)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                            </svg>
+                        </button>
+                        <button class="p-2 text-text-secondary hover:text-primary transition-colors" title="Redo (Ctrl+Y)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2m18-10l-6 6m6-6l-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Zoom Controls -->
+                    <div class="flex items-center space-x-2 border-l border-border pl-4">
+                        <button class="p-2 text-text-secondary hover:text-primary transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10h-3m0 0V7m0 3v3"/>
+                            </svg>
+                        </button>
+                        <span class="text-sm font-medium text-text-primary">100%</span>
+                        <button class="p-2 text-text-secondary hover:text-primary transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas Actions -->
+                <div class="flex items-center space-x-2">
+                    <button class="px-3 py-1.5 text-sm text-text-secondary hover:text-primary transition-colors">
+                        Reset Canvas
+                    </button>
+                    <button class="px-3 py-1.5 text-sm bg-accent text-white rounded-md hover:bg-accent-600 transition-colors">
+                        Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="flex-1 p-6 flex items-center justify-center" id="canvasContainer">
+                <!-- Drop Zone -->
+                <div class="w-full max-w-4xl h-96 border-2 border-dashed border-border rounded-lg flex flex-col items-center justify-center text-center bg-surface" id="dropZone">
+                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-medium text-text-primary mb-2">Start Creating</h3>
+                    <p class="text-text-secondary mb-4">Drop an image here to edit, or use the prompt to generate new content</p>
+                    <button class="btn-primary">
+                        Choose File
+                    </button>
+                </div>
+
+                <!-- Generated Image Display (Hidden by default) -->
+                <div class="hidden w-full max-w-4xl" id="imageDisplay">
+                    <div class="relative">
+                        <img src alt="Generated content" class="w-full h-auto rounded-lg shadow-lg" id="generatedImage" />
+                        <!-- Overlay Tools -->
+                        <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-200 rounded-lg flex items-center justify-center opacity-0 hover:opacity-100">
+                            <div class="flex items-center space-x-3">
+                                <button class="p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all">
+                                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                    </svg>
+                                </button>
+                                <button class="p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all">
+                                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Panel - Gallery & Export -->
+        <aside class="w-80 bg-surface border-l border-border flex-shrink-0 overflow-y-auto">
+            <div class="p-6 space-y-6">
+                <!-- Quick Actions -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-medium text-text-primary">Quick Actions</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="p-3 border border-border rounded-lg hover:border-primary transition-colors text-center">
+                            <svg class="w-6 h-6 mx-auto mb-1 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                            </svg>
+                            <span class="text-xs font-medium">Upload</span>
+                        </button>
+                        <button class="p-3 border border-border rounded-lg hover:border-primary transition-colors text-center">
+                            <svg class="w-6 h-6 mx-auto mb-1 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                            <span class="text-xs font-medium">Batch</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Generations -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-sm font-medium text-text-primary">Recent Generations</h3>
+                        <button class="text-xs text-primary hover:text-primary-600">View All</button>
+                    </div>
+                    
+                    <!-- Gallery Grid -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="relative group cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=400&auto=format&fit=crop" alt="Generated artwork" class="w-full h-24 object-cover rounded-lg" onerror="this.src='https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;" />
+                            <div class="preview-overlay">
+                                <button class="p-2 bg-white rounded-full shadow-lg">
+                                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="relative group cursor-pointer">
+                            <img src="https://images.pixabay.com/photo-2023/01/21/15/10/ai-generated-7734364_1280.jpg?q=80&w=400&auto=format&fit=crop" alt="AI generated landscape" class="w-full h-24 object-cover rounded-lg" onerror="this.src='https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=400&auto=format&fit=crop'; this.onerror=null;" />
+                            <div class="preview-overlay">
+                                <button class="p-2 bg-white rounded-full shadow-lg">
+                                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="relative group cursor-pointer">
+                            <img src="https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Digital art creation" class="w-full h-24 object-cover rounded-lg" onerror="this.src='https://images.pixabay.com/photo-2023/01/21/15/10/ai-generated-7734364_1280.jpg'; this.onerror=null;" />
+                            <div class="preview-overlay">
+                                <button class="p-2 bg-white rounded-full shadow-lg">
+                                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="relative group cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1686191128892-3b4e5b5e4b5e?q=80&w=400&auto=format&fit=crop" alt="Abstract AI art" class="w-full h-24 object-cover rounded-lg" onerror="this.src='https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;" />
+                            <div class="preview-overlay">
+                                <button class="p-2 bg-white rounded-full shadow-lg">
+                                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-medium text-text-primary">Export Options</h3>
+                    <div class="space-y-2">
+                        <button class="w-full p-3 border border-border rounded-lg hover:border-primary transition-colors text-left flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
+                                    <span class="text-xs font-bold text-blue-600">PNG</span>
+                                </div>
+                                <span class="text-sm font-medium">High Quality PNG</span>
+                            </div>
+                            <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                        </button>
+                        
+                        <button class="w-full p-3 border border-border rounded-lg hover:border-primary transition-colors text-left flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-green-100 rounded flex items-center justify-center">
+                                    <span class="text-xs font-bold text-green-600">JPG</span>
+                                </div>
+                                <span class="text-sm font-medium">Compressed JPEG</span>
+                            </div>
+                            <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Processing Queue -->
+                <div class="space-y-3">
+                    <h3 class="text-sm font-medium text-text-primary">Processing Queue</h3>
+                    <div class="text-center py-8 text-text-secondary">
+                        <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <p class="text-sm">No items in queue</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="mobileNavOverlay">
+        <div class="bg-surface w-80 h-full p-6 space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold">Navigation</h2>
+                <button class="p-2 text-text-secondary hover:text-primary" id="closeMobileNav">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="space-y-4">
+                <a href="ai_content_generation_studio.html" class="block text-primary font-medium">Generation Studio</a>
+                <a href="image_editor_workspace.html" class="block text-text-secondary hover:text-primary">Image Editor</a>
+                <a href="content_gallery_management.html" class="block text-text-secondary hover:text-primary">Gallery</a>
+                <a href="ai_model_settings_configuration.html" class="block text-text-secondary hover:text-primary">AI Settings</a>
+                <a href="user_dashboard_quick_actions.html" class="block text-text-secondary hover:text-primary">Dashboard</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // AI Content Generation Studio JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateBtn');
+            const progressBar = document.getElementById('progressBar');
+            const promptInput = document.getElementById('promptInput');
+            const dropZone = document.getElementById('dropZone');
+            const canvasContainer = document.getElementById('canvasContainer');
+            const imageDisplay = document.getElementById('imageDisplay');
+            const generatedImage = document.getElementById('generatedImage');
+
+            // Generate button functionality
+            generateBtn.addEventListener('click', function() {
+                const prompt = promptInput.value.trim();
+                if (!prompt) {
+                    alert('Please enter a prompt to generate an image.');
+                    return;
+                }
+
+                // Show progress bar
+                progressBar.classList.remove('hidden');
+                generateBtn.disabled = true;
+                generateBtn.innerHTML = '<svg class="w-5 h-5 mr-2 inline animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Generating...';
+
+                // Simulate AI generation process
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += Math.random() * 15;
+                    if (progress > 100) progress = 100;
+                    
+                    progressBar.querySelector('.progress-bar').style.width = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        
+                        // Hide progress bar and show generated image
+                        setTimeout(() => {
+                            progressBar.classList.add('hidden');
+                            dropZone.classList.add('hidden');
+                            imageDisplay.classList.remove('hidden');
+                            
+                            // Set a sample generated image
+                            const sampleImages = [
+                                'https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=800&auto=format&fit=crop',
+                                'https://images.pixabay.com/photo-2023/01/21/15/10/ai-generated-7734364_1280.jpg',
+                                'https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=800'
+                            ];
+                            generatedImage.src = sampleImages[Math.floor(Math.random() * sampleImages.length)];
+                            
+                            // Reset button
+                            generateBtn.disabled = false;
+                            generateBtn.innerHTML = '<svg class="w-5 h-5 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Generate Image';
+                        }, 500);
+                    }
+                }, 200);
+            });
+
+            // Drag and drop functionality
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropZone.classList.add('border-primary', 'bg-primary-50');
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('border-primary', 'bg-primary-50');
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('border-primary', 'bg-primary-50');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            dropZone.classList.add('hidden');
+                            imageDisplay.classList.remove('hidden');
+                            generatedImage.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+
+            // Mobile navigation
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const closeMobileNav = document.getElementById('closeMobileNav');
+            
+            document.querySelector('.md\\:hidden').addEventListener('click', function() {
+                mobileNavOverlay.classList.remove('hidden');
+            });
+            
+            closeMobileNav.addEventListener('click', function() {
+                mobileNavOverlay.classList.add('hidden');
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'Enter':
+                            e.preventDefault();
+                            generateBtn.click();
+                            break;
+                        case 'z':
+                            e.preventDefault();
+                            // Undo functionality
+                            console.log('Undo triggered');
+                            break;
+                        case 'y':
+                            e.preventDefault();
+                            // Redo functionality
+                            console.log('Redo triggered');
+                            break;
+                    }
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

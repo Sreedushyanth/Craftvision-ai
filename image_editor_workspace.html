@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Editor Workspace - VisionCraft AI</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvisioncraf2366back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.5"></script>
+</head>
+<body class="bg-background min-h-screen overflow-hidden">
+    <!-- Global Header Navigation -->
+    <header class="bg-surface border-b border-border sticky top-0 z-50 shadow-sm">
+        <div class="max-w-full px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-semibold text-text-primary">VisionCraft AI</h1>
+                </div>
+
+                <!-- Main Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="ai_content_generation_studio.html" class="text-text-secondary hover:text-primary transition-colors">Generation Studio</a>
+                    <a href="image_editor_workspace.html" class="text-primary font-medium border-b-2 border-primary pb-1">Image Editor</a>
+                    <a href="content_gallery_management.html" class="text-text-secondary hover:text-primary transition-colors">Gallery</a>
+                    <a href="ai_model_settings_configuration.html" class="text-text-secondary hover:text-primary transition-colors">AI Settings</a>
+                    <a href="user_dashboard_quick_actions.html" class="text-text-secondary hover:text-primary transition-colors">Dashboard</a>
+                </nav>
+
+                <!-- User Account & Export -->
+                <div class="flex items-center space-x-4">
+                    <button class="btn-secondary px-4 py-2 text-sm" id="exportBtn">
+                        <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="p-2 text-text-secondary hover:text-primary transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-12"/>
+                        </svg>
+                    </button>
+                    <div class="w-8 h-8 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">JD</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-text-secondary hover:text-primary" id="mobileMenuBtn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Breadcrumb Navigation -->
+        <div class="px-6 py-2 bg-gray-50 border-b border-border">
+            <nav class="flex items-center space-x-2 text-sm">
+                <a href="ai_content_generation_studio.html" class="text-text-secondary hover:text-primary">Studio</a>
+                <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span class="text-primary font-medium">Editor</span>
+                <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+                <span class="text-text-secondary" id="currentFileName">untitled.png</span>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Editor Layout -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Toolbar (60px) -->
+        <aside class="w-15 bg-surface border-r border-border flex-shrink-0 flex flex-col items-center py-4 space-y-3">
+            <!-- Tool Icons -->
+            <button class="tool-btn active" data-tool="select" title="Select Tool (V)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                </svg>
+            </button>
+            
+            <button class="tool-btn" data-tool="crop" title="Crop Tool (C)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m0 0v16a1 1 0 01-1 1H8a1 1 0 01-1-1V4m0 0H4"/>
+                </svg>
+            </button>
+
+            <button class="tool-btn" data-tool="brush" title="Brush Tool (B)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 10V9a2 2 0 012-2h.01a2 2 0 012 2v1a2 2 0 01-2 2H9a2 2 0 01-2-2z"/>
+                </svg>
+            </button>
+
+            <button class="tool-btn" data-tool="eraser" title="Eraser Tool (E)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+            </button>
+
+            <button class="tool-btn" data-tool="text" title="Text Tool (T)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+            </button>
+
+            <button class="tool-btn" data-tool="filters" title="Filters (F)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                </svg>
+            </button>
+
+            <button class="tool-btn" data-tool="ai-enhance" title="AI Enhance">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+            </button>
+
+            <!-- Divider -->
+            <div class="w-8 h-px bg-border my-2"></div>
+
+            <!-- Zoom Controls -->
+            <button class="tool-btn" id="zoomIn" title="Zoom In (+)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                </svg>
+            </button>
+
+            <button class="tool-btn" id="zoomOut" title="Zoom Out (-)">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10h-3"/>
+                </svg>
+            </button>
+        </aside>
+
+        <!-- Main Canvas Area -->
+        <main class="flex-1 flex flex-col bg-gray-50 relative">
+            <!-- Floating Toolbar -->
+            <div class="absolute top-4 left-1/2 transform -translate-x-1/2 z-30 bg-surface shadow-floating rounded-lg border border-border px-4 py-2 flex items-center space-x-3">
+                <!-- Undo/Redo -->
+                <button class="p-2 text-text-secondary hover:text-primary transition-colors" id="undoBtn" title="Undo (Ctrl+Z)">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                    </svg>
+                </button>
+                <button class="p-2 text-text-secondary hover:text-primary transition-colors" id="redoBtn" title="Redo (Ctrl+Y)">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10h-10a8 8 0 00-8 8v2m18-10l-6 6m6-6l-6-6"/>
+                    </svg>
+                </button>
+
+                <div class="w-px h-6 bg-border"></div>
+
+                <!-- Quick Actions -->
+                <button class="p-2 text-text-secondary hover:text-primary transition-colors" title="Resize Canvas">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                    </svg>
+                </button>
+
+                <button class="p-2 text-text-secondary hover:text-primary transition-colors" title="Flip Horizontal">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                    </svg>
+                </button>
+
+                <button class="p-2 text-text-secondary hover:text-primary transition-colors" title="Rotate">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </button>
+
+                <div class="w-px h-6 bg-border"></div>
+
+                <!-- Zoom Display -->
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm font-medium text-text-primary" id="zoomLevel">100%</span>
+                    <button class="p-1 text-text-secondary hover:text-primary transition-colors" title="Fit to Screen">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="flex-1 flex items-center justify-center p-6 relative" id="canvasContainer">
+                <!-- Canvas -->
+                <div class="relative bg-white shadow-floating rounded-lg overflow-hidden" id="canvasWrapper">
+                    <canvas id="mainCanvas" width="800" height="600" class="block"></canvas>
+                    
+                    <!-- Canvas Overlay for Tools -->
+                    <div class="absolute inset-0 pointer-events-none" id="canvasOverlay"></div>
+                    
+                    <!-- Processing Indicator -->
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="processingOverlay">
+                        <div class="bg-surface rounded-lg p-6 flex items-center space-x-3">
+                            <svg class="w-6 h-6 text-primary animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span class="text-text-primary font-medium">Processing...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drop Zone Overlay -->
+                <div class="absolute inset-0 border-2 border-dashed border-primary bg-primary-50 bg-opacity-90 flex items-center justify-center hidden" id="dropZone">
+                    <div class="text-center">
+                        <svg class="w-16 h-16 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                        </svg>
+                        <h3 class="text-lg font-medium text-primary mb-2">Drop Image Here</h3>
+                        <p class="text-text-secondary">Release to start editing</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Properties Panel (Hidden by default) -->
+        <aside class="w-80 bg-surface border-l border-border flex-shrink-0 transform translate-x-full transition-transform duration-300 ease-in-out" id="propertiesPanel">
+            <div class="p-6 space-y-6 h-full overflow-y-auto">
+                <!-- Panel Header -->
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-text-primary" id="panelTitle">Tool Properties</h3>
+                    <button class="p-2 text-text-secondary hover:text-primary transition-colors" id="closePanelBtn">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Dynamic Properties Content -->
+                <div id="propertiesContent">
+                    <!-- Default Content -->
+                    <div class="text-center py-8 text-text-secondary">
+                        <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                        </svg>
+                        <p class="text-sm">Select a tool to view properties</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Bottom Timeline (80px height) -->
+    <div class="h-20 bg-surface border-t border-border flex items-center px-6 space-x-4">
+        <!-- Timeline Controls -->
+        <div class="flex items-center space-x-2">
+            <button class="p-2 text-text-secondary hover:text-primary transition-colors" title="Clear History">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+            </button>
+            <span class="text-sm text-text-secondary">History</span>
+        </div>
+
+        <!-- Timeline Thumbnails -->
+        <div class="flex-1 flex items-center space-x-2 overflow-x-auto" id="historyTimeline">
+            <!-- Initial State -->
+            <div class="timeline-item active" data-step="0">
+                <div class="w-12 h-12 bg-gray-200 rounded border-2 border-primary flex items-center justify-center">
+                    <svg class="w-6 h-6 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <span class="text-xs text-text-secondary mt-1">Original</span>
+            </div>
+        </div>
+
+        <!-- Timeline Info -->
+        <div class="text-sm text-text-secondary">
+            <span id="currentStep">Step 1</span> of <span id="totalSteps">1</span>
+        </div>
+    </div>
+
+    <!-- Export Panel Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center" id="exportModal">
+        <div class="bg-surface rounded-lg shadow-elevated w-full max-w-md mx-4">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-text-primary">Export Image</h3>
+                    <button class="p-2 text-text-secondary hover:text-primary transition-colors" id="closeExportBtn">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Format Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Format</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button class="export-format-btn active" data-format="png">
+                                <span class="text-xs font-bold text-blue-600">PNG</span>
+                                <span class="text-xs text-text-secondary">Lossless</span>
+                            </button>
+                            <button class="export-format-btn" data-format="jpg">
+                                <span class="text-xs font-bold text-green-600">JPG</span>
+                                <span class="text-xs text-text-secondary">Compressed</span>
+                            </button>
+                            <button class="export-format-btn" data-format="webp">
+                                <span class="text-xs font-bold text-purple-600">WebP</span>
+                                <span class="text-xs text-text-secondary">Modern</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quality Settings -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Quality</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="range" class="flex-1" min="1" max="100" value="90" id="qualitySlider" />
+                            <span class="text-sm font-medium text-text-primary w-12" id="qualityValue">90%</span>
+                        </div>
+                    </div>
+
+                    <!-- Resolution -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Resolution</label>
+                        <select class="input-field">
+                            <option>Original (800x600)</option>
+                            <option>HD (1920x1080)</option>
+                            <option>4K (3840x2160)</option>
+                            <option>Custom...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end space-x-3 mt-6">
+                    <button class="px-4 py-2 text-text-secondary hover:text-primary transition-colors" id="cancelExportBtn">
+                        Cancel
+                    </button>
+                    <button class="btn-primary" id="confirmExportBtn">
+                        Export Image
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="mobileNavOverlay">
+        <div class="bg-surface w-80 h-full p-6 space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold">Navigation</h2>
+                <button class="p-2 text-text-secondary hover:text-primary" id="closeMobileNav">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="space-y-4">
+                <a href="ai_content_generation_studio.html" class="block text-text-secondary hover:text-primary">Generation Studio</a>
+                <a href="image_editor_workspace.html" class="block text-primary font-medium">Image Editor</a>
+                <a href="content_gallery_management.html" class="block text-text-secondary hover:text-primary">Gallery</a>
+                <a href="ai_model_settings_configuration.html" class="block text-text-secondary hover:text-primary">AI Settings</a>
+                <a href="user_dashboard_quick_actions.html" class="block text-text-secondary hover:text-primary">Dashboard</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Image Editor Workspace JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Canvas and context
+            const canvas = document.getElementById('mainCanvas');
+            const ctx = canvas.getContext('2d');
+            const canvasWrapper = document.getElementById('canvasWrapper');
+            const propertiesPanel = document.getElementById('propertiesPanel');
+            const propertiesContent = document.getElementById('propertiesContent');
+            const panelTitle = document.getElementById('panelTitle');
+            
+            // Tool management
+            let currentTool = 'select';
+            let isDrawing = false;
+            let zoomLevel = 100;
+            let history = [];
+            let historyStep = 0;
+
+            // Initialize canvas with sample image
+            const sampleImage = new Image();
+            sampleImage.crossOrigin = 'anonymous';
+            sampleImage.onload = function() {
+                canvas.width = this.width;
+                canvas.height = this.height;
+                ctx.drawImage(this, 0, 0);
+                saveToHistory();
+            };
+            sampleImage.src = 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=800&auto=format&fit=crop';
+
+            // Tool selection
+            document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all tools
+                    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentTool = this.dataset.tool;
+                    showPropertiesPanel(currentTool);
+                });
+            });
+
+            // Properties panel management
+            function showPropertiesPanel(tool) {
+                propertiesPanel.classList.remove('translate-x-full');
+                panelTitle.textContent = getToolTitle(tool);
+                propertiesContent.innerHTML = getToolProperties(tool);
+            }
+
+            function hidePropertiesPanel() {
+                propertiesPanel.classList.add('translate-x-full');
+            }
+
+            function getToolTitle(tool) {
+                const titles = {
+                    'select': 'Selection Tool',
+                    'crop': 'Crop Tool',
+                    'brush': 'Brush Tool',
+                    'eraser': 'Eraser Tool',
+                    'text': 'Text Tool',
+                    'filters': 'Filters',
+                    'ai-enhance': 'AI Enhancement'
+                };
+                return titles[tool] || 'Tool Properties';
+            }
+
+            function getToolProperties(tool) {
+                switch(tool) {
+                    case 'brush':
+                        return `
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Brush Size</label>
+                                    <div class="flex items-center space-x-3">
+                                        <input type="range" class="flex-1" min="1" max="100" value="10" id="brushSize">
+                                        <span class="text-sm font-medium text-text-primary w-8" id="brushSizeValue">10</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Opacity</label>
+                                    <div class="flex items-center space-x-3">
+                                        <input type="range" class="flex-1" min="1" max="100" value="100" id="brushOpacity">
+                                        <span class="text-sm font-medium text-text-primary w-8" id="brushOpacityValue">100</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Color</label>
+                                    <input type="color" value="#000000" class="w-full h-10 rounded border border-border">
+                                </div>
+                            </div>
+                        `;
+                    case 'filters':
+                        return `
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Brightness</label>
+                                    <input type="range" class="w-full" min="-100" max="100" value="0">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Contrast</label>
+                                    <input type="range" class="w-full" min="-100" max="100" value="0">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Saturation</label>
+                                    <input type="range" class="w-full" min="-100" max="100" value="0">
+                                </div>
+                                <button class="btn-primary w-full mt-4">Apply Filters</button>
+                            </div>
+                        `;
+                    case 'ai-enhance':
+                        return `
+                            <div class="space-y-4">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                        </svg>
+                                    </div>
+                                    <h4 class="font-medium text-text-primary mb-2">AI Enhancement</h4>
+                                    <p class="text-sm text-text-secondary mb-4">Enhance your image using AI</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <button class="w-full p-3 border border-border rounded-lg hover:border-primary transition-colors text-left">
+                                        <div class="font-medium text-sm">Upscale 2x</div>
+                                        <div class="text-xs text-text-secondary">Increase resolution</div>
+                                    </button>
+                                    <button class="w-full p-3 border border-border rounded-lg hover:border-primary transition-colors text-left">
+                                        <div class="font-medium text-sm">Denoise</div>
+                                        <div class="text-xs text-text-secondary">Remove noise and artifacts</div>
+                                    </button>
+                                    <button class="w-full p-3 border border-border rounded-lg hover:border-primary transition-colors text-left">
+                                        <div class="font-medium text-sm">Sharpen</div>
+                                        <div class="text-xs text-text-secondary">Enhance image sharpness</div>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    default:
+                        return `
+                            <div class="text-center py-8 text-text-secondary">
+                                <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                                </svg>
+                                <p class="text-sm">No properties available</p>
+                            </div>
+                        `;
+                }
+            }
+
+            // Close properties panel
+            document.getElementById('closePanelBtn').addEventListener('click', hidePropertiesPanel);
+
+            // Canvas drawing functionality
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            function startDrawing(e) {
+                if (currentTool === 'brush' || currentTool === 'eraser') {
+                    isDrawing = true;
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                }
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (currentTool === 'brush') {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 10;
+                } else if (currentTool === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.lineWidth = 20;
+                }
+                
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+
+            function stopDrawing() {
+                if (isDrawing) {
+                    isDrawing = false;
+                    saveToHistory();
+                }
+            }
+
+            // History management
+            function saveToHistory() {
+                historyStep++;
+                if (historyStep < history.length) {
+                    history.length = historyStep;
+                }
+                history.push(canvas.toDataURL());
+                updateTimeline();
+            }
+
+            function updateTimeline() {
+                const timeline = document.getElementById('historyTimeline');
+                const totalSteps = document.getElementById('totalSteps');
+                const currentStep = document.getElementById('currentStep');
+                
+                totalSteps.textContent = history.length;
+                currentStep.textContent = `Step ${historyStep + 1}`;
+                
+                // Add new timeline item if needed
+                if (timeline.children.length <= historyStep) {
+                    const item = document.createElement('div');
+                    item.className = 'timeline-item';
+                    item.dataset.step = historyStep;
+                    item.innerHTML = `
+                        <div class="w-12 h-12 bg-gray-200 rounded border-2 border-transparent flex items-center justify-center">
+                            <span class="text-xs font-medium">${historyStep + 1}</span>
+                        </div>
+                        <span class="text-xs text-text-secondary mt-1">Edit ${historyStep + 1}</span>
+                    `;
+                    timeline.appendChild(item);
+                }
+                
+                // Update active state
+                document.querySelectorAll('.timeline-item').forEach((item, index) => {
+                    if (index === historyStep) {
+                        item.classList.add('active');
+                        item.querySelector('div').classList.add('border-primary');
+                    } else {
+                        item.classList.remove('active');
+                        item.querySelector('div').classList.remove('border-primary');
+                    }
+                });
+            }
+
+            // Undo/Redo functionality
+            document.getElementById('undoBtn').addEventListener('click', function() {
+                if (historyStep > 0) {
+                    historyStep--;
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                        updateTimeline();
+                    };
+                    img.src = history[historyStep];
+                }
+            });
+
+            document.getElementById('redoBtn').addEventListener('click', function() {
+                if (historyStep < history.length - 1) {
+                    historyStep++;
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                        updateTimeline();
+                    };
+                    img.src = history[historyStep];
+                }
+            });
+
+            // Zoom functionality
+            document.getElementById('zoomIn').addEventListener('click', function() {
+                zoomLevel = Math.min(zoomLevel + 25, 500);
+                updateZoom();
+            });
+
+            document.getElementById('zoomOut').addEventListener('click', function() {
+                zoomLevel = Math.max(zoomLevel - 25, 25);
+                updateZoom();
+            });
+
+            function updateZoom() {
+                const scale = zoomLevel / 100;
+                canvasWrapper.style.transform = `scale(${scale})`;
+                document.getElementById('zoomLevel').textContent = `${zoomLevel}%`;
+            }
+
+            // Drag and drop functionality
+            const dropZone = document.getElementById('dropZone');
+            const canvasContainer = document.getElementById('canvasContainer');
+
+            canvasContainer.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('hidden');
+            });
+
+            canvasContainer.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                if (!canvasContainer.contains(e.relatedTarget)) {
+                    dropZone.classList.add('hidden');
+                }
+            });
+
+            canvasContainer.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropZone.classList.add('hidden');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = new Image();
+                            img.onload = function() {
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                ctx.drawImage(img, 0, 0);
+                                saveToHistory();
+                                document.getElementById('currentFileName').textContent = file.name;
+                            };
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+
+            // Export functionality
+            const exportModal = document.getElementById('exportModal');
+            const exportBtn = document.getElementById('exportBtn');
+            const closeExportBtn = document.getElementById('closeExportBtn');
+            const cancelExportBtn = document.getElementById('cancelExportBtn');
+            const confirmExportBtn = document.getElementById('confirmExportBtn');
+
+            exportBtn.addEventListener('click', () => exportModal.classList.remove('hidden'));
+            closeExportBtn.addEventListener('click', () => exportModal.classList.add('hidden'));
+            cancelExportBtn.addEventListener('click', () => exportModal.classList.add('hidden'));
+
+            confirmExportBtn.addEventListener('click', function() {
+                const format = document.querySelector('.export-format-btn.active').dataset.format;
+                const quality = document.getElementById('qualitySlider').value / 100;
+                
+                let mimeType = 'image/png';
+                if (format === 'jpg') mimeType = 'image/jpeg';
+                if (format === 'webp') mimeType = 'image/webp';
+                
+                const dataURL = canvas.toDataURL(mimeType, quality);
+                const link = document.createElement('a');
+                link.download = `edited-image.${format}`;
+                link.href = dataURL;
+                link.click();
+                
+                exportModal.classList.add('hidden');
+            });
+
+            // Export format selection
+            document.querySelectorAll('.export-format-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.export-format-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Quality slider
+            const qualitySlider = document.getElementById('qualitySlider');
+            const qualityValue = document.getElementById('qualityValue');
+            if (qualitySlider && qualityValue) {
+                qualitySlider.addEventListener('input', function() {
+                    qualityValue.textContent = this.value + '%';
+                });
+            }
+
+            // Mobile navigation
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMobileNav = document.getElementById('closeMobileNav');
+            
+            mobileMenuBtn.addEventListener('click', () => mobileNavOverlay.classList.remove('hidden'));
+            closeMobileNav.addEventListener('click', () => mobileNavOverlay.classList.add('hidden'));
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'z':
+                            e.preventDefault();
+                            document.getElementById('undoBtn').click();
+                            break;
+                        case 'y':
+                            e.preventDefault();
+                            document.getElementById('redoBtn').click();
+                            break;
+                        case 's':
+                            e.preventDefault();
+                            exportBtn.click();
+                            break;
+                    }
+                }
+                
+                // Tool shortcuts
+                switch(e.key) {
+                    case 'v':
+                        document.querySelector('[data-tool="select"]').click();
+                        break;
+                    case 'c':
+                        document.querySelector('[data-tool="crop"]').click();
+                        break;
+                    case 'b':
+                        document.querySelector('[data-tool="brush"]').click();
+                        break;
+                    case 'e':
+                        document.querySelector('[data-tool="eraser"]').click();
+                        break;
+                    case 't':
+                        document.querySelector('[data-tool="text"]').click();
+                        break;
+                    case 'f':
+                        document.querySelector('[data-tool="filters"]').click();
+                        break;
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .tool-btn {
+            @apply w-12 h-12 flex items-center justify-center rounded-lg text-text-secondary hover:text-primary hover:bg-primary-50 transition-all duration-200;
+        }
+        
+        .tool-btn.active {
+            @apply bg-primary text-white shadow-md;
+        }
+        
+        .timeline-item {
+            @apply flex flex-col items-center space-y-1 cursor-pointer;
+        }
+        
+        .timeline-item.active .w-12 {
+            @apply border-primary;
+        }
+        
+        .export-format-btn {
+            @apply p-3 border border-border rounded-lg hover:border-primary transition-colors text-center flex flex-col items-center space-y-1;
+        }
+        
+        .export-format-btn.active {
+            @apply border-primary bg-primary-50;
+        }
+        
+        #canvasWrapper {
+            transform-origin: center;
+            transition: transform 0.2s ease-out;
+        }
+        
+        .contextual-toolbar {
+            backdrop-filter: blur(8px);
+        }
+    </style>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

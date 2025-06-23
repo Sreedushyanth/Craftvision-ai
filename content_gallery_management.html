@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Gallery & Management - VisionCraft AI</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvisioncraf2366back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.5"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header Navigation -->
+    <header class="bg-surface border-b border-border sticky top-0 z-50 shadow-sm">
+        <div class="max-w-full px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-semibold text-text-primary">VisionCraft AI</h1>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Search by prompt, style, or metadata..." class="input-field pl-10 pr-4" id="searchInput" />
+                        <svg class="w-5 h-5 text-text-secondary absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Main Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="ai_content_generation_studio.html" class="text-text-secondary hover:text-primary transition-colors">Generation Studio</a>
+                    <a href="image_editor_workspace.html" class="text-text-secondary hover:text-primary transition-colors">Image Editor</a>
+                    <a href="content_gallery_management.html" class="text-primary font-medium border-b-2 border-primary pb-1">Gallery</a>
+                    <a href="ai_model_settings_configuration.html" class="text-text-secondary hover:text-primary transition-colors">AI Settings</a>
+                    <a href="user_dashboard_quick_actions.html" class="text-text-secondary hover:text-primary transition-colors">Dashboard</a>
+                </nav>
+
+                <!-- User Account -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-text-secondary hover:text-primary transition-colors" id="selectionModeBtn">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </button>
+                    <div class="w-8 h-8 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">JD</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-text-secondary hover:text-primary" id="mobileMenuBtn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="md:hidden mt-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search content..." class="input-field pl-10 pr-4" id="mobileSearchInput" />
+                    <svg class="w-5 h-5 text-text-secondary absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- Desktop Filter Sidebar -->
+        <aside class="hidden lg:block w-80 bg-surface border-r border-border flex-shrink-0 overflow-y-auto">
+            <div class="p-6 space-y-6">
+                <!-- Filter Header -->
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold text-text-primary">Filters</h2>
+                    <button class="text-sm text-primary hover:text-primary-600 font-medium" id="clearFiltersBtn">
+                        Clear All
+                    </button>
+                </div>
+
+                <!-- Sort Options -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">Sort By</label>
+                    <select class="input-field" id="sortSelect">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="most-used">Most Used</option>
+                        <option value="favorites">Favorites</option>
+                        <option value="name">Name A-Z</option>
+                    </select>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">Categories</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" checked />
+                            <span class="text-sm text-text-primary">All Images</span>
+                            <span class="text-xs text-text-secondary bg-gray-100 px-2 py-1 rounded-full ml-auto">247</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Photorealistic</span>
+                            <span class="text-xs text-text-secondary bg-gray-100 px-2 py-1 rounded-full ml-auto">89</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Digital Art</span>
+                            <span class="text-xs text-text-secondary bg-gray-100 px-2 py-1 rounded-full ml-auto">76</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Oil Painting</span>
+                            <span class="text-xs text-text-secondary bg-gray-100 px-2 py-1 rounded-full ml-auto">45</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Anime</span>
+                            <span class="text-xs text-text-secondary bg-gray-100 px-2 py-1 rounded-full ml-auto">37</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- AI Model Filter -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">AI Model</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">DALL-E 3</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Midjourney v6</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Stable Diffusion XL</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Adobe Firefly</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Date Range -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">Date Range</label>
+                    <div class="space-y-2">
+                        <input type="date" class="input-field text-sm" id="startDate" />
+                        <input type="date" class="input-field text-sm" id="endDate" />
+                    </div>
+                </div>
+
+                <!-- Resolution Filter -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">Resolution</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">1024x1024</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">1920x1080</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">768x1024</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Gallery Area -->
+        <main class="flex-1 flex flex-col bg-background overflow-hidden">
+            <!-- Top Filter Bar -->
+            <div class="bg-surface border-b border-border px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <!-- Filter Toggles (Mobile) -->
+                    <div class="flex items-center space-x-4">
+                        <button class="lg:hidden btn-primary text-sm px-3 py-2" id="mobileFiltersBtn">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"/>
+                            </svg>
+                            Filters
+                        </button>
+                        
+                        <!-- Quick Sort (Mobile) -->
+                        <select class="lg:hidden input-field text-sm" id="mobileSortSelect">
+                            <option value="newest">Newest</option>
+                            <option value="oldest">Oldest</option>
+                            <option value="favorites">Favorites</option>
+                        </select>
+                    </div>
+
+                    <!-- View Options & Actions -->
+                    <div class="flex items-center space-x-4">
+                        <!-- Grid Size Controls -->
+                        <div class="hidden md:flex items-center space-x-2 border-l border-border pl-4">
+                            <button class="p-2 text-text-secondary hover:text-primary transition-colors" id="gridSmall">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 3h4v4H3V3zm6 0h4v4H9V3zm6 0h4v4h-4V3zM3 9h4v4H3V9zm6 0h4v4H9V9zm6 0h4v4h-4V9zM3 15h4v4H3v-4zm6 0h4v4H9v-4zm6 0h4v4h-4v-4z"/>
+                                </svg>
+                            </button>
+                            <button class="p-2 text-primary transition-colors" id="gridMedium">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/>
+                                </svg>
+                            </button>
+                            <button class="p-2 text-text-secondary hover:text-primary transition-colors" id="gridLarge">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 3h18v8H3V3zm0 10h18v8H3v-8z"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Bulk Actions (Hidden by default) -->
+                        <div class="hidden items-center space-x-2" id="bulkActions">
+                            <span class="text-sm text-text-secondary" id="selectedCount">0 selected</span>
+                            <button class="btn-primary text-sm px-3 py-1.5" id="bulkExportBtn">Export</button>
+                            <button class="text-sm text-error hover:text-error-600 px-3 py-1.5" id="bulkDeleteBtn">Delete</button>
+                        </div>
+
+                        <!-- Total Count -->
+                        <span class="text-sm text-text-secondary">247 images</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="flex-1 overflow-y-auto p-6" id="galleryContainer">
+                <div class="masonry-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4" id="galleryGrid">
+                    <!-- Gallery Item 1 -->
+                    <div class="gallery-item group relative cursor-pointer" data-id="1">
+                        <div class="relative overflow-hidden rounded-lg bg-surface shadow-creative hover:shadow-floating transition-all duration-200">
+                            <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=400&auto=format&fit=crop" alt="AI Generated Artwork" class="w-full h-48 object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;" />
+                            
+                            <!-- Selection Checkbox -->
+                            <div class="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <input type="checkbox" class="selection-checkbox rounded border-2 border-white bg-white bg-opacity-80 text-primary focus:ring-primary" />
+                            </div>
+
+                            <!-- Favorite Button -->
+                            <button class="absolute top-2 right-2 p-1.5 bg-black bg-opacity-50 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+
+                            <!-- Overlay Info -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-0 left-0 right-0 p-3 text-white">
+                                    <p class="text-xs font-medium mb-1">DALL-E 3</p>
+                                    <p class="text-xs opacity-80 line-clamp-2">Futuristic cityscape with neon lights and flying cars</p>
+                                    <p class="text-xs opacity-60 mt-1">Jan 15, 2025</p>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="View Details">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Edit">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Download">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item group relative cursor-pointer" data-id="2">
+                        <div class="relative overflow-hidden rounded-lg bg-surface shadow-creative hover:shadow-floating transition-all duration-200">
+                            <img src="https://images.pixabay.com/photo-2023/01/21/15/10/ai-generated-7734364_1280.jpg?q=80&w=400&auto=format&fit=crop" alt="AI Generated Landscape" class="w-full h-64 object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=400&auto=format&fit=crop'; this.onerror=null;" />
+                            
+                            <div class="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <input type="checkbox" class="selection-checkbox rounded border-2 border-white bg-white bg-opacity-80 text-primary focus:ring-primary" />
+                            </div>
+
+                            <button class="absolute top-2 right-2 p-1.5 bg-black bg-opacity-50 rounded-full text-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-0 left-0 right-0 p-3 text-white">
+                                    <p class="text-xs font-medium mb-1">Midjourney v6</p>
+                                    <p class="text-xs opacity-80 line-clamp-2">Serene mountain landscape with aurora borealis</p>
+                                    <p class="text-xs opacity-60 mt-1">Jan 14, 2025</p>
+                                </div>
+                            </div>
+
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="View Details">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Edit">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Download">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item group relative cursor-pointer" data-id="3">
+                        <div class="relative overflow-hidden rounded-lg bg-surface shadow-creative hover:shadow-floating transition-all duration-200">
+                            <img src="https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Digital Art Creation" class="w-full h-56 object-cover" loading="lazy" onerror="this.src='https://images.pixabay.com/photo-2023/01/21/15/10/ai-generated-7734364_1280.jpg'; this.onerror=null;" />
+                            
+                            <div class="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <input type="checkbox" class="selection-checkbox rounded border-2 border-white bg-white bg-opacity-80 text-primary focus:ring-primary" />
+                            </div>
+
+                            <button class="absolute top-2 right-2 p-1.5 bg-black bg-opacity-50 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-0 left-0 right-0 p-3 text-white">
+                                    <p class="text-xs font-medium mb-1">Stable Diffusion XL</p>
+                                    <p class="text-xs opacity-80 line-clamp-2">Abstract digital art with vibrant colors</p>
+                                    <p class="text-xs opacity-60 mt-1">Jan 13, 2025</p>
+                                </div>
+                            </div>
+
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="View Details">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Edit">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Download">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery Item 4 -->
+                    <div class="gallery-item group relative cursor-pointer" data-id="4">
+                        <div class="relative overflow-hidden rounded-lg bg-surface shadow-creative hover:shadow-floating transition-all duration-200">
+                            <img src="https://images.unsplash.com/photo-1686191128892-3b4e5b5e4b5e?q=80&w=400&auto=format&fit=crop" alt="Abstract AI Art" class="w-full h-52 object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/8566473/pexels-photo-8566473.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;" />
+                            
+                            <div class="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <input type="checkbox" class="selection-checkbox rounded border-2 border-white bg-white bg-opacity-80 text-primary focus:ring-primary" />
+                            </div>
+
+                            <button class="absolute top-2 right-2 p-1.5 bg-black bg-opacity-50 rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-70">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-0 left-0 right-0 p-3 text-white">
+                                    <p class="text-xs font-medium mb-1">Adobe Firefly</p>
+                                    <p class="text-xs opacity-80 line-clamp-2">Geometric patterns with metallic textures</p>
+                                    <p class="text-xs opacity-60 mt-1">Jan 12, 2025</p>
+                                </div>
+                            </div>
+
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="View Details">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Edit">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="p-2 bg-white rounded-full shadow-lg hover:shadow-xl transition-all" title="Download">
+                                        <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More gallery items would continue here... -->
+                    <!-- Loading Skeleton Placeholders -->
+                    <div class="gallery-item animate-pulse">
+                        <div class="bg-gray-200 rounded-lg h-48"></div>
+                    </div>
+                    <div class="gallery-item animate-pulse">
+                        <div class="bg-gray-200 rounded-lg h-56"></div>
+                    </div>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-8">
+                    <button class="btn-primary px-6 py-3" id="loadMoreBtn">
+                        Load More Images
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Bottom Tab Bar -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-40">
+        <div class="flex items-center justify-around py-2">
+            <a href="ai_content_generation_studio.html" class="flex flex-col items-center p-2 text-text-secondary">
+                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <span class="text-xs">Generate</span>
+            </a>
+            <a href="image_editor_workspace.html" class="flex flex-col items-center p-2 text-text-secondary">
+                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                </svg>
+                <span class="text-xs">Edit</span>
+            </a>
+            <a href="content_gallery_management.html" class="flex flex-col items-center p-2 text-primary">
+                <svg class="w-5 h-5 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                </svg>
+                <span class="text-xs font-medium">Gallery</span>
+            </a>
+            <a href="ai_model_settings_configuration.html" class="flex flex-col items-center p-2 text-text-secondary">
+                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span class="text-xs">Settings</span>
+            </a>
+            <a href="user_dashboard_quick_actions.html" class="flex flex-col items-center p-2 text-text-secondary">
+                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6a2 2 0 01-2 2H10a2 2 0 01-2-2V5z"/>
+                </svg>
+                <span class="text-xs">Dashboard</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="mobileNavOverlay">
+        <div class="bg-surface w-80 h-full p-6 space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold">Navigation</h2>
+                <button class="p-2 text-text-secondary hover:text-primary" id="closeMobileNav">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="space-y-4">
+                <a href="ai_content_generation_studio.html" class="block text-text-secondary hover:text-primary">Generation Studio</a>
+                <a href="image_editor_workspace.html" class="block text-text-secondary hover:text-primary">Image Editor</a>
+                <a href="content_gallery_management.html" class="block text-primary font-medium">Gallery</a>
+                <a href="ai_model_settings_configuration.html" class="block text-text-secondary hover:text-primary">AI Settings</a>
+                <a href="user_dashboard_quick_actions.html" class="block text-text-secondary hover:text-primary">Dashboard</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Mobile Filters Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="mobileFiltersOverlay">
+        <div class="bg-surface w-full h-full p-6 space-y-6 overflow-y-auto">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold">Filters</h2>
+                <button class="p-2 text-text-secondary hover:text-primary" id="closeMobileFilters">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Mobile Filter Content (Same as desktop sidebar) -->
+            <div class="space-y-6">
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">Sort By</label>
+                    <select class="input-field">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="most-used">Most Used</option>
+                        <option value="favorites">Favorites</option>
+                    </select>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-text-primary">Categories</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" checked />
+                            <span class="text-sm text-text-primary">All Images</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Photorealistic</span>
+                        </label>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" class="rounded border-border text-primary focus:ring-primary" />
+                            <span class="text-sm text-text-primary">Digital Art</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex space-x-4 pt-6">
+                    <button class="btn-primary flex-1">Apply Filters</button>
+                    <button class="flex-1 px-4 py-2 border border-border rounded-md text-text-secondary hover:text-primary transition-colors">Clear All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail View Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4" id="detailModal">
+        <div class="bg-surface rounded-lg max-w-4xl w-full max-h-full overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold text-text-primary">Image Details</h2>
+                    <button class="p-2 text-text-secondary hover:text-primary" id="closeDetailModal">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <img src alt="Full resolution image" class="w-full rounded-lg" id="modalImage" />
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-sm font-medium text-text-secondary mb-2">Original Prompt</h3>
+                            <p class="text-text-primary" id="modalPrompt">Futuristic cityscape with neon lights and flying cars, cyberpunk style, high detail, 4K resolution</p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-medium text-text-secondary mb-2">Generation Details</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">AI Model:</span>
+                                    <span class="text-text-primary">DALL-E 3</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">Resolution:</span>
+                                    <span class="text-text-primary">1024x1024</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">Created:</span>
+                                    <span class="text-text-primary">Jan 15, 2025</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">Style:</span>
+                                    <span class="text-text-primary">Photorealistic</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3 pt-4">
+                            <button class="btn-primary flex-1">Edit Image</button>
+                            <button class="btn-secondary flex-1">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Content Gallery Management JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectionMode = false;
+            let selectedItems = new Set();
+
+            // Elements
+            const selectionModeBtn = document.getElementById('selectionModeBtn');
+            const bulkActions = document.getElementById('bulkActions');
+            const selectedCount = document.getElementById('selectedCount');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const selectionCheckboxes = document.querySelectorAll('.selection-checkbox');
+            const searchInput = document.getElementById('searchInput');
+            const mobileSearchInput = document.getElementById('mobileSearchInput');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const detailModal = document.getElementById('detailModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalPrompt = document.getElementById('modalPrompt');
+            const closeDetailModal = document.getElementById('closeDetailModal');
+
+            // Mobile overlays
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const mobileFiltersOverlay = document.getElementById('mobileFiltersOverlay');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileFiltersBtn = document.getElementById('mobileFiltersBtn');
+            const closeMobileNav = document.getElementById('closeMobileNav');
+            const closeMobileFilters = document.getElementById('closeMobileFilters');
+
+            // Selection mode toggle
+            selectionModeBtn.addEventListener('click', function() {
+                selectionMode = !selectionMode;
+                toggleSelectionMode();
+            });
+
+            function toggleSelectionMode() {
+                if (selectionMode) {
+                    selectionModeBtn.classList.add('text-primary');
+                    bulkActions.classList.remove('hidden');
+                    bulkActions.classList.add('flex');
+                    // Show all checkboxes
+                    selectionCheckboxes.forEach(checkbox => {
+                        checkbox.parentElement.classList.remove('opacity-0');
+                        checkbox.parentElement.classList.add('opacity-100');
+                    });
+                } else {
+                    selectionModeBtn.classList.remove('text-primary');
+                    bulkActions.classList.add('hidden');
+                    bulkActions.classList.remove('flex');
+                    // Hide checkboxes and clear selections
+                    selectionCheckboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                        checkbox.parentElement.classList.add('opacity-0');
+                        checkbox.parentElement.classList.remove('opacity-100');
+                    });
+                    selectedItems.clear();
+                    updateSelectedCount();
+                }
+            }
+
+            // Handle checkbox changes
+            selectionCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const itemId = this.closest('.gallery-item').dataset.id;
+                    if (this.checked) {
+                        selectedItems.add(itemId);
+                    } else {
+                        selectedItems.delete(itemId);
+                    }
+                    updateSelectedCount();
+                });
+            });
+
+            function updateSelectedCount() {
+                selectedCount.textContent = `${selectedItems.size} selected`;
+            }
+
+            // Gallery item click handlers
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // Don't open detail if clicking on checkbox or action buttons
+                    if (e.target.closest('.selection-checkbox') || e.target.closest('button')) {
+                        return;
+                    }
+                    
+                    if (selectionMode) {
+                        const checkbox = this.querySelector('.selection-checkbox');
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change'));
+                    } else {
+                        openDetailModal(this);
+                    }
+                });
+
+                // Long press for mobile selection
+                let longPressTimer;
+                item.addEventListener('touchstart', function(e) {
+                    longPressTimer = setTimeout(() => {
+                        if (!selectionMode) {
+                            selectionMode = true;
+                            toggleSelectionMode();
+                        }
+                        const checkbox = this.querySelector('.selection-checkbox');
+                        checkbox.checked = true;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }, 500);
+                });
+
+                item.addEventListener('touchend', function() {
+                    clearTimeout(longPressTimer);
+                });
+            });
+
+            function openDetailModal(item) {
+                const img = item.querySelector('img');
+                const prompt = item.querySelector('.line-clamp-2').textContent;
+                
+                modalImage.src = img.src;
+                modalPrompt.textContent = prompt;
+                detailModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeDetailModal.addEventListener('click', function() {
+                detailModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Search functionality
+            function handleSearch(query) {
+                // Simulate search filtering
+                console.log('Searching for:', query);
+                // In a real app, this would filter the gallery items
+            }
+
+            searchInput.addEventListener('input', function() {
+                handleSearch(this.value);
+            });
+
+            mobileSearchInput.addEventListener('input', function() {
+                handleSearch(this.value);
+            });
+
+            // Load more functionality
+            loadMoreBtn.addEventListener('click', function() {
+                this.innerHTML = '<svg class="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>Loading...';
+                
+                // Simulate loading
+                setTimeout(() => {
+                    this.innerHTML = 'Load More Images';
+                    // In a real app, this would load more images
+                }, 2000);
+            });
+
+            // Mobile navigation
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileNavOverlay.classList.remove('hidden');
+            });
+
+            closeMobileNav.addEventListener('click', function() {
+                mobileNavOverlay.classList.add('hidden');
+            });
+
+            // Mobile filters
+            mobileFiltersBtn.addEventListener('click', function() {
+                mobileFiltersOverlay.classList.remove('hidden');
+            });
+
+            closeMobileFilters.addEventListener('click', function() {
+                mobileFiltersOverlay.classList.add('hidden');
+            });
+
+            // Grid size controls
+            const gridControls = document.querySelectorAll('[id^="grid"]');
+            gridControls.forEach(control => {
+                control.addEventListener('click', function() {
+                    gridControls.forEach(c => c.classList.remove('text-primary'));
+                    gridControls.forEach(c => c.classList.add('text-text-secondary'));
+                    this.classList.add('text-primary');
+                    this.classList.remove('text-text-secondary');
+                    
+                    // Adjust grid columns based on selection
+                    const galleryGrid = document.getElementById('galleryGrid');
+                    if (this.id === 'gridSmall') {
+                        galleryGrid.className = 'masonry-grid grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4';
+                    } else if (this.id === 'gridLarge') {
+                        galleryGrid.className = 'masonry-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4';
+                    } else {
+                        galleryGrid.className = 'masonry-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4';
+                    }
+                });
+            });
+
+            // Bulk actions
+            document.getElementById('bulkExportBtn').addEventListener('click', function() {
+                if (selectedItems.size > 0) {
+                    alert(`Exporting ${selectedItems.size} images...`);
+                    // Implement bulk export functionality
+                }
+            });
+
+            document.getElementById('bulkDeleteBtn').addEventListener('click', function() {
+                if (selectedItems.size > 0 && confirm(`Delete ${selectedItems.size} selected images?`)) {
+                    // Implement bulk delete functionality
+                    selectedItems.clear();
+                    updateSelectedCount();
+                    selectionMode = false;
+                    toggleSelectionMode();
+                }
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'a':
+                            e.preventDefault();
+                            if (selectionMode) {
+                                // Select all
+                                selectionCheckboxes.forEach(checkbox => {
+                                    checkbox.checked = true;
+                                    selectedItems.add(checkbox.closest('.gallery-item').dataset.id);
+                                });
+                                updateSelectedCount();
+                            }
+                            break;
+                        case 'f':
+                            e.preventDefault();
+                            searchInput.focus();
+                            break;
+                    }
+                }
+                
+                if (e.key === 'Escape') {
+                    if (detailModal && !detailModal.classList.contains('hidden')) {
+                        closeDetailModal.click();
+                    } else if (selectionMode) {
+                        selectionMode = false;
+                        toggleSelectionMode();
+                    }
+                }
+            });
+
+            // Pull to refresh (mobile)
+            let startY = 0;
+            let pullDistance = 0;
+            const pullThreshold = 100;
+
+            document.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            });
+
+            document.addEventListener('touchmove', function(e) {
+                if (window.scrollY === 0) {
+                    pullDistance = e.touches[0].clientY - startY;
+                    if (pullDistance > 0 && pullDistance < pullThreshold) {
+                        // Show pull indicator
+                        console.log('Pull to refresh:', pullDistance);
+                    }
+                }
+            });
+
+            document.addEventListener('touchend', function() {
+                if (pullDistance >= pullThreshold) {
+                    // Trigger refresh
+                    console.log('Refreshing gallery...');
+                    location.reload();
+                }
+                pullDistance = 0;
+            });
+
+            // Infinite scroll
+            window.addEventListener('scroll', function() {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
+                    if (!loadMoreBtn.innerHTML.includes('Loading')) {
+                        loadMoreBtn.click();
+                    }
+                }
+            });
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

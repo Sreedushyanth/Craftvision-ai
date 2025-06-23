@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Model & Settings Configuration - VisionCraft AI</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvisioncraf2366back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.5"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Global Header Navigation -->
+    <header class="bg-surface border-b border-border sticky top-0 z-50 shadow-sm">
+        <div class="max-w-full px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl font-semibold text-text-primary">VisionCraft AI</h1>
+                </div>
+
+                <!-- Main Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="ai_content_generation_studio.html" class="text-text-secondary hover:text-primary transition-colors">Generation Studio</a>
+                    <a href="image_editor_workspace.html" class="text-text-secondary hover:text-primary transition-colors">Image Editor</a>
+                    <a href="content_gallery_management.html" class="text-text-secondary hover:text-primary transition-colors">Gallery</a>
+                    <a href="ai_model_settings_configuration.html" class="text-primary font-medium border-b-2 border-primary pb-1">AI Settings</a>
+                    <a href="user_dashboard_quick_actions.html" class="text-text-secondary hover:text-primary transition-colors">Dashboard</a>
+                </nav>
+
+                <!-- User Account -->
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-text-secondary hover:text-primary transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-12"/>
+                        </svg>
+                    </button>
+                    <div class="w-8 h-8 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">JD</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-text-secondary hover:text-primary" id="mobileMenuBtn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-surface border-b border-border px-6 py-3">
+        <nav class="flex items-center space-x-2 text-sm">
+            <a href="user_dashboard_quick_actions.html" class="text-text-secondary hover:text-primary transition-colors">Dashboard</a>
+            <svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <span class="text-text-primary font-medium">AI Model & Settings Configuration</span>
+        </nav>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- Left Sidebar Navigation -->
+        <aside class="w-60 bg-surface border-r border-border flex-shrink-0 overflow-y-auto">
+            <div class="p-6 space-y-6">
+                <!-- Settings Categories -->
+                <div class="space-y-2">
+                    <h3 class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Configuration</h3>
+                    <nav class="space-y-1">
+                        <button class="settings-nav-item active" data-section="ai-models">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            AI Models
+                        </button>
+                        <button class="settings-nav-item" data-section="generation-defaults">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                            </svg>
+                            Generation Defaults
+                        </button>
+                        <button class="settings-nav-item" data-section="interface-preferences">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
+                            </svg>
+                            Interface Preferences
+                        </button>
+                        <button class="settings-nav-item" data-section="export-settings">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Export Settings
+                        </button>
+                        <button class="settings-nav-item" data-section="account-management">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            Account Management
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="space-y-2">
+                    <h3 class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button class="w-full p-2 text-left text-sm text-text-secondary hover:text-primary hover:bg-primary-50 rounded-md transition-colors">
+                            Reset All Settings
+                        </button>
+                        <button class="w-full p-2 text-left text-sm text-text-secondary hover:text-primary hover:bg-primary-50 rounded-md transition-colors">
+                            Export Configuration
+                        </button>
+                        <button class="w-full p-2 text-left text-sm text-text-secondary hover:text-primary hover:bg-primary-50 rounded-md transition-colors">
+                            Import Configuration
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Settings Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50">
+            <!-- AI Models Section -->
+            <div class="settings-section active" id="ai-models">
+                <div class="p-8">
+                    <div class="max-w-4xl">
+                        <!-- Section Header -->
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-semibold text-text-primary mb-2">AI Models Configuration</h2>
+                            <p class="text-text-secondary">Manage and configure AI models for content generation. Enable or disable models based on your needs and preferences.</p>
+                        </div>
+
+                        <!-- Model Comparison Cards -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                            <!-- DALL-E 3 Model -->
+                            <div class="card">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">DALL-E 3</h3>
+                                            <p class="text-sm text-text-secondary">OpenAI's latest model</p>
+                                        </div>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Model Stats -->
+                                <div class="space-y-3 mb-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Quality</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Speed</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Creativity</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Model Preview -->
+                                <div class="w-full h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mb-3 flex items-center justify-center">
+                                    <span class="text-xs text-text-secondary">Sample Output Preview</span>
+                                </div>
+                            </div>
+
+                            <!-- Midjourney Model -->
+                            <div class="card">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">Midjourney v6</h3>
+                                            <p class="text-sm text-text-secondary">Artistic excellence</p>
+                                        </div>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Model Stats -->
+                                <div class="space-y-3 mb-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Quality</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Speed</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Creativity</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Model Preview -->
+                                <div class="w-full h-24 bg-gradient-to-br from-green-100 to-blue-100 rounded-lg mb-3 flex items-center justify-center">
+                                    <span class="text-xs text-text-secondary">Sample Output Preview</span>
+                                </div>
+                            </div>
+
+                            <!-- Stable Diffusion Model -->
+                            <div class="card">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">Stable Diffusion XL</h3>
+                                            <p class="text-sm text-text-secondary">Open source power</p>
+                                        </div>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" />
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Model Stats -->
+                                <div class="space-y-3 mb-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Quality</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Speed</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Creativity</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Model Preview -->
+                                <div class="w-full h-24 bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg mb-3 flex items-center justify-center">
+                                    <span class="text-xs text-text-secondary">Sample Output Preview</span>
+                                </div>
+                            </div>
+
+                            <!-- Adobe Firefly Model -->
+                            <div class="card">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">Adobe Firefly</h3>
+                                            <p class="text-sm text-text-secondary">Commercial safe</p>
+                                        </div>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer" checked />
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                
+                                <!-- Model Stats -->
+                                <div class="space-y-3 mb-4">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Quality</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Speed</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-text-secondary">Creativity</span>
+                                        <div class="flex items-center space-x-1">
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                            <div class="w-2 h-2 bg-gray-300 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Model Preview -->
+                                <div class="w-full h-24 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg mb-3 flex items-center justify-center">
+                                    <span class="text-xs text-text-secondary">Sample Output Preview</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Model Performance Settings -->
+                        <div class="card">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Performance Settings</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-text-primary">Concurrent Generations</label>
+                                    <select class="input-field">
+                                        <option>1 (Recommended)</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                    <p class="text-xs text-text-secondary">Higher values may impact performance</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-sm font-medium text-text-primary">Memory Usage</label>
+                                    <select class="input-field">
+                                        <option>Auto (Recommended)</option>
+                                        <option>Conservative</option>
+                                        <option>Balanced</option>
+                                        <option>Aggressive</option>
+                                    </select>
+                                    <p class="text-xs text-text-secondary">Adjust based on your system capabilities</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generation Defaults Section -->
+            <div class="settings-section" id="generation-defaults">
+                <div class="p-8">
+                    <div class="max-w-4xl">
+                        <!-- Section Header -->
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-semibold text-text-primary mb-2">Generation Defaults</h2>
+                            <p class="text-text-secondary">Configure default parameters for AI content generation. These settings will be applied to new generations unless overridden.</p>
+                        </div>
+
+                        <!-- Default Parameters -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Left Column -->
+                            <div class="space-y-6">
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Image Parameters</h3>
+                                    
+                                    <!-- Resolution -->
+                                    <div class="space-y-3 mb-6">
+                                        <label class="block text-sm font-medium text-text-primary">Default Resolution</label>
+                                        <select class="input-field">
+                                            <option>1024x1024 (Square)</option>
+                                            <option>1024x768 (Landscape)</option>
+                                            <option>768x1024 (Portrait)</option>
+                                            <option>1920x1080 (HD)</option>
+                                            <option>2048x2048 (High Res)</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Quality Slider -->
+                                    <div class="space-y-3 mb-6">
+                                        <div class="flex items-center justify-between">
+                                            <label class="block text-sm font-medium text-text-primary">Quality Level</label>
+                                            <span class="text-sm font-medium text-primary" id="qualityValue">7</span>
+                                        </div>
+                                        <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider" min="1" max="10" value="7" id="qualitySlider" />
+                                        <div class="flex justify-between text-xs text-text-secondary">
+                                            <span>Fast</span>
+                                            <span>Balanced</span>
+                                            <span>High Quality</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Creativity Slider -->
+                                    <div class="space-y-3">
+                                        <div class="flex items-center justify-between">
+                                            <label class="block text-sm font-medium text-text-primary">Creativity Level</label>
+                                            <span class="text-sm font-medium text-primary" id="creativityValue">5</span>
+                                        </div>
+                                        <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider" min="1" max="10" value="5" id="creativitySlider" />
+                                        <div class="flex justify-between text-xs text-text-secondary">
+                                            <span>Conservative</span>
+                                            <span>Balanced</span>
+                                            <span>Creative</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Style Presets -->
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Default Style Preset</h3>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <button class="style-preset-btn active" data-style="photorealistic">
+                                            <div class="w-full h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded mb-2"></div>
+                                            <span class="text-xs font-medium">Photorealistic</span>
+                                        </button>
+                                        <button class="style-preset-btn" data-style="digital-art">
+                                            <div class="w-full h-16 bg-gradient-to-br from-orange-400 to-pink-600 rounded mb-2"></div>
+                                            <span class="text-xs font-medium">Digital Art</span>
+                                        </button>
+                                        <button class="style-preset-btn" data-style="oil-painting">
+                                            <div class="w-full h-16 bg-gradient-to-br from-green-400 to-blue-600 rounded mb-2"></div>
+                                            <span class="text-xs font-medium">Oil Painting</span>
+                                        </button>
+                                        <button class="style-preset-btn" data-style="anime">
+                                            <div class="w-full h-16 bg-gradient-to-br from-purple-400 to-red-600 rounded mb-2"></div>
+                                            <span class="text-xs font-medium">Anime</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column -->
+                            <div class="space-y-6">
+                                <!-- Live Preview -->
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Live Preview</h3>
+                                    <div class="w-full h-48 bg-gradient-to-br from-primary-50 to-secondary-50 rounded-lg flex items-center justify-center mb-4">
+                                        <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=400&auto=format&fit=crop" alt="Preview with current settings" class="w-full h-full object-cover rounded-lg" onerror="this.src='https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=400'; this.onerror=null;" />
+                                    </div>
+                                    <p class="text-sm text-text-secondary">Preview updates automatically as you adjust settings</p>
+                                </div>
+
+                                <!-- Advanced Settings -->
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Advanced Options</h3>
+                                    
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Negative Prompts</label>
+                                                <p class="text-xs text-text-secondary">Automatically add quality filters</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Prompt Enhancement</label>
+                                                <p class="text-xs text-text-secondary">AI-powered prompt optimization</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Auto-Save Generations</label>
+                                                <p class="text-xs text-text-secondary">Automatically save to gallery</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interface Preferences Section -->
+            <div class="settings-section" id="interface-preferences">
+                <div class="p-8">
+                    <div class="max-w-4xl">
+                        <!-- Section Header -->
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-semibold text-text-primary mb-2">Interface Preferences</h2>
+                            <p class="text-text-secondary">Customize the application interface to match your workflow and preferences.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Theme Settings -->
+                            <div class="card">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Theme & Appearance</h3>
+                                
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-primary mb-3">Color Theme</label>
+                                        <div class="grid grid-cols-3 gap-3">
+                                            <button class="theme-option active" data-theme="light">
+                                                <div class="w-full h-16 bg-white border-2 border-gray-200 rounded-lg mb-2 flex items-center justify-center">
+                                                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                                    </svg>
+                                                </div>
+                                                <span class="text-xs font-medium">Light</span>
+                                            </button>
+                                            <button class="theme-option" data-theme="dark">
+                                                <div class="w-full h-16 bg-gray-800 border-2 border-gray-600 rounded-lg mb-2 flex items-center justify-center">
+                                                    <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                                    </svg>
+                                                </div>
+                                                <span class="text-xs font-medium">Dark</span>
+                                            </button>
+                                            <button class="theme-option" data-theme="auto">
+                                                <div class="w-full h-16 bg-gradient-to-r from-white to-gray-800 border-2 border-gray-300 rounded-lg mb-2 flex items-center justify-center">
+                                                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                                                    </svg>
+                                                </div>
+                                                <span class="text-xs font-medium">Auto</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-primary mb-3">Accent Color</label>
+                                        <div class="flex items-center space-x-3">
+                                            <button class="w-8 h-8 bg-primary rounded-full border-2 border-white shadow-md ring-2 ring-primary ring-offset-2"></button>
+                                            <button class="w-8 h-8 bg-secondary rounded-full border-2 border-white shadow-md"></button>
+                                            <button class="w-8 h-8 bg-accent rounded-full border-2 border-white shadow-md"></button>
+                                            <button class="w-8 h-8 bg-green-500 rounded-full border-2 border-white shadow-md"></button>
+                                            <button class="w-8 h-8 bg-red-500 rounded-full border-2 border-white shadow-md"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Layout Settings -->
+                            <div class="card">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Layout & Workspace</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <label class="text-sm font-medium text-text-primary">Compact Mode</label>
+                                            <p class="text-xs text-text-secondary">Reduce spacing for more content</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" />
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                        </label>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <label class="text-sm font-medium text-text-primary">Show Tooltips</label>
+                                            <p class="text-xs text-text-secondary">Display helpful hints on hover</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked />
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                        </label>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <label class="text-sm font-medium text-text-primary">Sidebar Auto-Hide</label>
+                                            <p class="text-xs text-text-secondary">Hide sidebar when not in use</p>
+                                        </div>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" />
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Keyboard Shortcuts -->
+                            <div class="card lg:col-span-2">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Keyboard Shortcuts</h3>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-3">
+                                        <h4 class="text-sm font-medium text-text-primary">Generation</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Generate Image</span>
+                                                <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl+Enter</kbd>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Quick Save</span>
+                                                <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl+S</kbd>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Open Gallery</span>
+                                                <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl+G</kbd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="space-y-3">
+                                        <h4 class="text-sm font-medium text-text-primary">Navigation</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Settings</span>
+                                                <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl+,</kbd>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Search</span>
+                                                <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Ctrl+K</kbd>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Help</span>
+                                                <kbd class="px-2 py-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">F1</kbd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-border">
+                                    <button class="btn-primary">Customize Shortcuts</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Settings Section -->
+            <div class="settings-section" id="export-settings">
+                <div class="p-8">
+                    <div class="max-w-4xl">
+                        <!-- Section Header -->
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-semibold text-text-primary mb-2">Export Settings</h2>
+                            <p class="text-text-secondary">Configure default export formats, quality settings, and batch processing options for your generated content.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Format Settings -->
+                            <div class="card">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Default Export Formats</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="border border-border rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
+                                                    <span class="text-xs font-bold text-blue-600">PNG</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">PNG Format</h4>
+                                                    <p class="text-xs text-text-secondary">Lossless, supports transparency</p>
+                                                </div>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Compression Level</span>
+                                                <span class="text-sm font-medium text-primary">6</span>
+                                            </div>
+                                            <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="0" max="9" value="6" />
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-border rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 bg-green-100 rounded flex items-center justify-center">
+                                                    <span class="text-xs font-bold text-green-600">JPG</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">JPEG Format</h4>
+                                                    <p class="text-xs text-text-secondary">Smaller file size, good for photos</p>
+                                                </div>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Quality</span>
+                                                <span class="text-sm font-medium text-primary">85%</span>
+                                            </div>
+                                            <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="10" max="100" value="85" />
+                                        </div>
+                                    </div>
+
+                                    <div class="border border-border rounded-lg p-4">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-8 h-8 bg-purple-100 rounded flex items-center justify-center">
+                                                    <span class="text-xs font-bold text-purple-600">WEBP</span>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">WebP Format</h4>
+                                                    <p class="text-xs text-text-secondary">Modern format, excellent compression</p>
+                                                </div>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Quality</span>
+                                                <span class="text-sm font-medium text-primary">80%</span>
+                                            </div>
+                                            <input type="range" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" min="10" max="100" value="80" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Batch Processing -->
+                            <div class="space-y-6">
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Batch Processing</h3>
+                                    
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-text-primary mb-2">Batch Size Limit</label>
+                                            <select class="input-field">
+                                                <option>10 images</option>
+                                                <option>25 images</option>
+                                                <option>50 images</option>
+                                                <option>100 images</option>
+                                                <option>No limit</option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-text-primary mb-2">Processing Priority</label>
+                                            <select class="input-field">
+                                                <option>Quality (Slower)</option>
+                                                <option>Balanced</option>
+                                                <option>Speed (Faster)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Auto-Organize Exports</label>
+                                                <p class="text-xs text-text-secondary">Create folders by date/format</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Metadata & Watermarks</h3>
+                                    
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Include Generation Data</label>
+                                                <p class="text-xs text-text-secondary">Embed prompt and settings in metadata</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Add Watermark</label>
+                                                <p class="text-xs text-text-secondary">Subtle branding on exports</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-text-primary mb-2">Filename Template</label>
+                                            <input type="text" class="input-field" value="VisionCraft_{timestamp}_{model}" placeholder="Custom filename pattern" />
+                                            <p class="text-xs text-text-secondary mt-1">Use {timestamp}, {model}, {prompt} variables</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Management Section -->
+            <div class="settings-section" id="account-management">
+                <div class="p-8">
+                    <div class="max-w-4xl">
+                        <!-- Section Header -->
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-semibold text-text-primary mb-2">Account Management</h2>
+                            <p class="text-text-secondary">Manage your account settings, subscription, and data preferences.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Profile Settings -->
+                            <div class="card">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Profile Information</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-4 mb-6">
+                                        <div class="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xl font-medium">JD</span>
+                                        </div>
+                                        <div>
+                                            <button class="text-sm text-primary hover:text-primary-600 font-medium">Change Avatar</button>
+                                            <p class="text-xs text-text-secondary">JPG, PNG up to 2MB</p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-primary mb-2">Display Name</label>
+                                        <input type="text" class="input-field" value="John Doe" placeholder="Your display name" />
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                                        <input type="email" class="input-field" value="john.doe@example.com" placeholder="your.email@example.com" />
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-primary mb-2">Bio</label>
+                                        <textarea class="input-field h-20 resize-none" placeholder="Tell us about yourself...">Digital artist and AI enthusiast exploring the intersection of creativity and technology.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Subscription & Usage -->
+                            <div class="space-y-6">
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Subscription Plan</h3>
+                                    
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between p-4 bg-primary-50 rounded-lg">
+                                            <div>
+                                                <h4 class="font-medium text-text-primary">Pro Plan</h4>
+                                                <p class="text-sm text-text-secondary">Unlimited generations, premium models</p>
+                                            </div>
+                                            <span class="text-lg font-semibold text-primary">$29/mo</span>
+                                        </div>
+
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Generations this month</span>
+                                                <span class="text-sm font-medium text-text-primary">247 / Unlimited</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="bg-primary h-2 rounded-full" style="width: 24.7%"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex space-x-2">
+                                            <button class="btn-primary flex-1">Manage Subscription</button>
+                                            <button class="px-4 py-2 border border-border rounded-md text-text-secondary hover:text-primary transition-colors">Billing</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <h3 class="text-lg font-semibold text-text-primary mb-4">Data & Privacy</h3>
+                                    
+                                    <div class="space-y-4">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Analytics & Insights</label>
+                                                <p class="text-xs text-text-secondary">Help improve our service</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <label class="text-sm font-medium text-text-primary">Marketing Communications</label>
+                                                <p class="text-xs text-text-secondary">Updates and feature announcements</p>
+                                            </div>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" />
+                                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                            </label>
+                                        </div>
+
+                                        <div class="pt-4 border-t border-border space-y-2">
+                                            <button class="w-full p-2 text-left text-sm text-text-secondary hover:text-primary hover:bg-primary-50 rounded-md transition-colors">
+                                                Download My Data
+                                            </button>
+                                            <button class="w-full p-2 text-left text-sm text-text-secondary hover:text-primary hover:bg-primary-50 rounded-md transition-colors">
+                                                Delete Account
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Save Changes -->
+                        <div class="mt-8 flex items-center justify-between">
+                            <p class="text-sm text-text-secondary">Changes are saved automatically</p>
+                            <div class="flex space-x-3">
+                                <button class="px-4 py-2 border border-border rounded-md text-text-secondary hover:text-primary transition-colors">Reset to Defaults</button>
+                                <button class="btn-primary">Save All Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="mobileNavOverlay">
+        <div class="bg-surface w-80 h-full p-6 space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-semibold">Navigation</h2>
+                <button class="p-2 text-text-secondary hover:text-primary" id="closeMobileNav">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <nav class="space-y-4">
+                <a href="ai_content_generation_studio.html" class="block text-text-secondary hover:text-primary">Generation Studio</a>
+                <a href="image_editor_workspace.html" class="block text-text-secondary hover:text-primary">Image Editor</a>
+                <a href="content_gallery_management.html" class="block text-text-secondary hover:text-primary">Gallery</a>
+                <a href="ai_model_settings_configuration.html" class="block text-primary font-medium">AI Settings</a>
+                <a href="user_dashboard_quick_actions.html" class="block text-text-secondary hover:text-primary">Dashboard</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // AI Model Settings Configuration JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Settings navigation
+            const settingsNavItems = document.querySelectorAll('.settings-nav-item');
+            const settingsSections = document.querySelectorAll('.settings-section');
+
+            settingsNavItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetSection = this.getAttribute('data-section');
+                    
+                    // Update navigation active state
+                    settingsNavItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target section
+                    settingsSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === targetSection) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            // Slider value updates
+            const qualitySlider = document.getElementById('qualitySlider');
+            const qualityValue = document.getElementById('qualityValue');
+            const creativitySlider = document.getElementById('creativitySlider');
+            const creativityValue = document.getElementById('creativityValue');
+
+            if (qualitySlider && qualityValue) {
+                qualitySlider.addEventListener('input', function() {
+                    qualityValue.textContent = this.value;
+                });
+            }
+
+            if (creativitySlider && creativityValue) {
+                creativitySlider.addEventListener('input', function() {
+                    creativityValue.textContent = this.value;
+                });
+            }
+
+            // Style preset selection
+            const stylePresetBtns = document.querySelectorAll('.style-preset-btn');
+            stylePresetBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    stylePresetBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Theme selection
+            const themeOptions = document.querySelectorAll('.theme-option');
+            themeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    themeOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Mobile navigation
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+            const closeMobileNav = document.getElementById('closeMobileNav');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileNavOverlay.classList.remove('hidden');
+                });
+            }
+
+            if (closeMobileNav) {
+                closeMobileNav.addEventListener('click', function() {
+                    mobileNavOverlay.classList.add('hidden');
+                });
+            }
+
+            // Auto-save simulation
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // Simulate auto-save with subtle feedback
+                    const feedback = document.createElement('div');
+                    feedback.className = 'fixed top-4 right-4 bg-success text-white px-4 py-2 rounded-md text-sm z-50 opacity-0 transition-opacity duration-200';
+                    feedback.textContent = 'Settings saved automatically';
+                    document.body.appendChild(feedback);
+                    
+                    setTimeout(() => {
+                        feedback.classList.remove('opacity-0');
+                        setTimeout(() => {
+                            feedback.classList.add('opacity-0');
+                            setTimeout(() => {
+                                document.body.removeChild(feedback);
+                            }, 200);
+                        }, 2000);
+                    }, 100);
+                });
+            });
+
+            // Range slider styling
+            const sliders = document.querySelectorAll('input[type="range"]');
+            sliders.forEach(slider => {
+                slider.addEventListener('input', function() {
+                    const value = (this.value - this.min) / (this.max - this.min) * 100;
+                    this.style.background = `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${value}%, #e5e7eb ${value}%, #e5e7eb 100%)`;
+                });
+                
+                // Initialize styling
+                const value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+                slider.style.background = `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${value}%, #e5e7eb ${value}%, #e5e7eb 100%)`;
+            });
+        });
+    </script>
+
+    <style>
+        .settings-nav-item {
+            @apply w-full flex items-center space-x-3 px-3 py-2 text-sm text-text-secondary hover:text-primary hover:bg-primary-50 rounded-md transition-colors cursor-pointer;
+        }
+        
+        .settings-nav-item.active {
+            @apply text-primary bg-primary-50 font-medium;
+        }
+        
+        .settings-section {
+            @apply hidden;
+        }
+        
+        .settings-section.active {
+            @apply block;
+        }
+        
+        .style-preset-btn {
+            @apply p-3 border border-border rounded-lg hover:border-primary transition-colors text-left cursor-pointer;
+        }
+        
+        .style-preset-btn.active {
+            @apply border-primary bg-primary-50;
+        }
+        
+        .theme-option {
+            @apply text-center cursor-pointer;
+        }
+        
+        .theme-option.active .w-full {
+            @apply ring-2 ring-primary ring-offset-2;
+        }
+        
+        /* Custom slider styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        
+        input[type="range"]::-webkit-slider-track {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--color-primary);
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        input[type="range"]::-moz-range-track {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            border: none;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            background: var(--color-primary);
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+    </style>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
